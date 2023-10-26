@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+         .slider {
+            border-radius: 5px;
+            background: #E0E0E0;
+            background: linear-gradient(left top, #E0E0E0, #EEEEEE);
+            width: 310px;
+            height: 15px;
+            margin: 5px;
+        }
+
+        .thumb {
+            width: 10px;
+            height: 25px;
+            border-radius: 3px;
+            position: relative;
+            left: 10px;
+            top: -5px;
+            background: blue;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    
+   <h2>Drag-n-drop</h2>
+   <div  class="slider">
+    <div class="thumb"></div>
+<script>
+const thumb = document.querySelector('.thumb');
+const slider = document.querySelector('.slider');
+
+thumb.addEventListener('mousedown', (e) => {
+
+     e.preventDefault();
+
+     let shiftX = e.clientX - thumb.getBoundingClientRect().left;
+
+     thumb.addEventListener('mousemove', onMouseMove);
+     thumb.addEventListener('mouseup', onMouseUp );
+
+     function onMouseMove (e) {
+        let newLeft = e.clientX - shiftX - slider.getBoundingClientRect().left;
+
+        if (newLeft < 0) {
+            newLeft = 0;
+        }
+
+        let rightEdge = slider.offsetWidth - thumb.offsetWidth;
+
+        if(newLeft > rightEdge) {
+            newLeft = rightEdge;
+        }
+
+        thumb.style.left = newLeft + "px";
+     }
+
+    function onMouseUp () {
+        document.removeEventListener('mousemove', onMouseMove);
+        document.removeEventListener('mouseup', onMouseUp);
+    }
+});
+
+thumb.ondragstart = () => {
+        return false;
+     }; 
+</script>
+</body>
+</html>

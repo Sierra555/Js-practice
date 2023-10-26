@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body,
+        html {
+          height: 100%;
+          width: 100%;
+          padding: 0;
+          margin: 0;
+        }
+    
+        #matrix {
+          width: 400px;
+          margin: auto;
+          overflow: auto;
+          text-align: justify;
+        }
+    
+        #arrowTop {
+          display: none;
+          height: 9px;
+          width: 14px;
+          color: green;
+          position: fixed;
+          top: 10px;
+          left: 10px;
+          cursor: pointer;
+        }
+    
+        #arrowTop::before {
+          content: '▲';
+        }
+    
+      </style>
+</head>
+<body>
+    <div id="matrix">
+        <script>
+          for (let i = 0; i < 2000; i++) document.writeln(i)
+        </script>
+      </div>
+    
+      <div id="arrowTop"></div>
+<script>
+//Створіть нескінченну сторінку. Коли відвідувач прокручує її до кінця, поточна дата-час автоматично додається до тексту (щоб відвідувач міг прокручувати більше).
+function populate() {
+    while(true) {
+        // нижня частина документа
+        let windowRelativeBottom = document.documentElement.getBoundingClientRect().bottom;
+
+        // якщо користувач не прокрутив достатньо далеко (>100px до кінця)
+        if (windowRelativeBottom > document.documentElement.clientHeight + 100) break;
+
+        // додамо більше даних
+        document.body.insertAdjacentHTML("beforeend", `<p>Date: ${new Date()}</p>`);
+    }
+//Ми можемо негайно викликати її та додати window.onscroll як обробник.
+}
+
+//Створіть кнопку “вгору”, щоб допомогти прокручувати сторінку.
+//window height- document.documentElement.clientHeight
+function arrowTop() {
+    const arrow = document.querySelector('#arrowTop');;
+    if (window.pageYOffset > document.documentElement.clientHeight) {
+        arrow.style.display='block';
+        arrow.addEventListener('click', () => {
+            document.documentElement.scrollTop = 0;
+        })
+    } else {
+        arrow.style.display='none';
+    }
+}
+
+window.addEventListener('scroll', arrowTop);
+//   window.addEventListener('scroll', function() {
+//     arrowTop.hidden = (pageYOffset < document.documentElement.clientHeight);
+//     });
+</script>
+</body>
+</html>

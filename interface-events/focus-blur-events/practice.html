@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .view,
+        .edit {
+        height: 150px;
+        width: 400px;
+        font-family: sans-serif;
+        font-size: 14px;
+        display: block;
+        }
+
+        .view {
+        /* padding + border = 3px */
+        padding: 2px;
+        border: 1px solid black;
+        }
+
+        .edit {
+        /* замінити padding на border (3px щоб не зміщувати вміст) */
+        border: 3px solid blue;
+        padding: 0px;
+        }
+
+        .edit:focus {
+        /* позбутися рамки при фокусуванні в Safari */
+        outline: none;
+        }
+        /* загальні стилі для таблиці, немає потреби редагувати */
+
+        th {
+        text-align: center;
+        font-weight: bold;
+        }
+
+        td {
+        width: 150px;
+        white-space: nowrap;
+        text-align: center;
+        vertical-align: middle;
+        padding: 10px;
+        }
+
+        .nw {
+        background-color: #999;
+        }
+
+        .n {
+        background-color: #03f;
+        color: #fff;
+        }
+
+        .ne {
+        background-color: #ff6;
+        }
+
+        .w {
+        background-color: #ff0;
+        }
+
+        .c {
+        background-color: #60c;
+        color: #fff;
+        }
+
+        .e {
+        background-color: #09f;
+        color: #fff;
+        }
+
+        .sw {
+        background-color: #963;
+        color: #fff;
+        }
+
+        .s {
+        background-color: #f60;
+        color: #fff;
+        }
+
+        .se {
+        background-color: #0c3;
+        color: #fff;
+        }
+
+        #mouse {
+        display: inline-block;
+        cursor: pointer;
+        margin: 0;
+        }
+
+        #mouse:focus {
+        outline: 1px dashed black;
+        }
+    </style>
+</head>
+<body>
+    <ul>
+        <li>Клікніть на div щоб відредагувати.</li>
+        <li>Натискання Enter або втрата фокусу збереже вміст поля введення.</li>
+      </ul>
+    
+      HTML дозволено.
+    
+      <div id="view" class="view">Текст</div>
+    
+      <script>
+        const textArea = document.createElement('textarea');
+        const view = document.querySelector('.view');
+
+
+        view.onclick = () => {
+            view.replaceWith(textArea);
+            textArea.classList.add('edit');
+            textArea.value = view.innerHTML;
+        };
+        
+        textArea.onblur = () => {
+            view.innerHTML = textArea.value;
+            textArea.replaceWith(view);
+        }
+
+      </script>
+
+<p>Клікніть на клітину щоб відредагувати. Натисніть ЗГОДА або ВІДМІНА щоб завершити.</p>
+
+<table id="bagua-table">
+  <tr>
+    <th colspan="3">Таблиця<em>Bagua</em>: Напрям, Елемент, Колір, Значення</th>
+  </tr>
+  <tr>
+    <td class="nw"><strong>Північний захід</strong>
+      <br>Метал
+      <br>Срібло
+      <br>Старійшини
+    </td>
+    <td class="n"><strong>Північ</strong>
+      <br>Вода
+      <br>Синій
+      <br>Зміни
+    </td>
+    <td class="ne"><strong>Північний схід</strong>
+      <br>Земля
+      <br>Жовтий
+      <br>Напрям
+    </td>
+  </tr>
+  <tr>
+    <td class="w"><strong>Захід</strong>
+      <br>Метал
+      <br>Золото
+      <br>Молодість
+    </td>
+    <td class="c"><strong>Центр</strong>
+      <br>Все
+      <br>Багряний
+      <br>Гармонія
+    </td>
+    <td class="e"><strong>Схід</strong>
+      <br>Дерево
+      <br>Синій
+      <br>Майбутнє
+    </td>
+  </tr>
+  <tr>
+    <td class="sw"><strong>Південний захід</strong>
+      <br>Земля
+      <br>Коричневий
+      <br>Спокій
+    </td>
+    <td class="s"><strong>Південь</strong>
+      <br>Вогонь
+      <br>Помаранчевий
+      <br>Слава
+    </td>
+    <td class="se"><strong>Південний схід</strong>
+      <br>Дерево
+      <br>Зелений
+      <br>Роман
+    </td>
+  </tr>
+
+</table>
+<script>
+  const table = document.querySelector('#bagua-table');
+  const area = document.createElement('textarea');
+  let editingTd;
+
+  table.addEventListener('click', (e) => {
+    const target = e.target.closest('okBtn,cancelBtn,td');
+
+    if (!table.contains(target)) return;
+    
+    // if (target.nodeName='TH') {
+    //    if (editingTd) return;
+    //    editTD(target);
+    // } elseif (target.className == 'okBtn') {
+    //     finishEditing (editingTd.elem, true);
+    // }
+    // elseif (target.className == 'cancelBtn') {
+    //     finishEditing (editingTd.elem, flse);
+    // }
+    area.value = e.target.innerHTML;
+    area.style.width = target.clientWidth + 'px';
+    area.style.height =  target.clientHeight + 'px';
+    e.target.replaceWith(area);
+    const okBtn = document.createElement('button');
+    const cancelBtn = document.createElement('button');
+    
+});
+</script>
+
+<p>Клікніть на мишу та рухайте нею за допомогою стрілок клавіатури.</p>
+
+<pre id="mouse">
+ _   _
+(q\_/p)
+ /. .\
+=\_t_/=   __
+ /   \   (
+((   ))   )
+/\) (/\  /
+\  Y  /-'
+ nn^nn
+</pre>
+
+
+<script>
+const mouse = document.querySelector('#mouse');
+mouse.tabIndex = 0;
+    //    if (elem == document.activeElement) {
+    let coords = mouse.getBoundingClientRect();
+    console.log(coords.left);
+
+    mouse.addEventListener('focus', (e) => {
+        e.target.style.left = coords.left + 'px';
+        e.target.style.top = coords.top + 'px';
+        e.target.style.position='fixed';
+    });
+
+    mouse.addEventListener('keydown', (e) => {
+        switch (e.key) {
+            case 'ArrowRight' :
+            e.target.style.left = parseInt(e.target.style.left) + e.target.offsetWidth + 'px';
+            return false;
+            case 'ArrowDown' :
+            e.target.style.top = parseInt(e.target.style.top) + e.target.offsetHeight + 'px';
+            return false;
+            case 'ArrowLeft' :
+            e.target.style.left = parseInt(e.target.style.left) - e.target.offsetWidth + 'px';
+            return false;
+            case 'ArrowUp' :
+            e.target.style.top = parseInt(e.target.style.top) - e.target.offsetHeight + 'px';
+            return false;
+        }
+    });
+    //    }
+
+</script>
+
+</body>
+</html>

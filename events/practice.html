@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #field {
+            width: 200px;
+            height: 150px;
+            border: 10px solid black;
+            background-color: #00FF00;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        #ball {
+            position: absolute;
+        }
+        </style>
+</head>
+<body>
+
+Натисніть поле, щоб перемістити м’яч.
+
+<div id="field">
+<img src="https://en.js.cx/clipart/ball.svg" id="ball"> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+</div>
+
+<script> 
+const ball = document.querySelector('#ball');
+const field = document.querySelector('#field');
+
+field.addEventListener('click', (e) => {
+     const coords = [e.clientX, e.clientY];
+     const left = coords[0] - field.offsetLeft - field.clientLeft  - ball.clientWidth / 2;
+     const top = coords[1] - field.offsetTop - field.clientTop - ball.clientHeight / 2;
+
+     ball.style.left = `${left}px`;
+     ball.style.top = `${top}px`;
+});
+
+</script>
+<h2>Напишіть такий JavaScript, щоб після натискання на кнопку button, елемент text зникав.Напишіть такий код, щоб після натискання на кнопку, вона зникала.
+</h2>
+    <button id="button">Click</button>
+    <div id="text">Text</div>
+<script>
+document.querySelector('#button').addEventListener(('click'), (e) => {
+    document.querySelector('#text').remove();
+    e.target.remove();
+
+});
+</script>
+
+<style>
+    .form, .div, .p {
+      margin: 10px;
+      border: 1px solid blue;
+    }
+  </style>
+  <form class="form" onclick="alert('form')">FORM
+    <div class="div" onclick="alert('div')">DIV
+      <p class="p" onclick="alert('p')">P</p>
+    </div>
+  </form>
+
+  <h2>Делегування</h2>
+
+<h4>Приховайте повідомлення за допомогою делегування</h4>
+
+<div id="container">
+    <div class="pane">
+      <h3>Кінь</h3>
+      <p>Кінь є одним із двох існуючих підвидів дикого коня (Equus ferus). Це парнокопитний ссавець, що належить до таксономічної родини коневих (Equidae). За останні 45-55 мільйонів років кінь еволюціонував із маленької багатопалої істоти, Еогіппа (Eohippus), до великої однопалої тварини сучасності.</p>
+      <button class="remove-button">[x]</button>
+    </div>
+    <div class="pane">
+      <h3>Осел</h3>
+      <p>Осел (Equus africanus asinus) є одомашненим представником сімейства коней (Equidae). Диким предком осла є африканський дикий осел (E. africanus). Осел використовувався як робоча тварина щонайменше 5000 років.</p>
+      <button class="remove-button">[x]</button>
+    </div>
+    <div class="pane">
+      <h3>Кіт</h3>
+      <p>Домашній кіт (лат. Felis catus) — невеликий, типово пухнастий, хижий ссавець. Їх часто називають домашніми котами, якщо їх триваюсь вдома, або просто котами, коли немає необхідності відрізняти їх від інших котячих. Люди часто цінують котів за товариські стосунки і за їх здатність полювати на шкідників.
+      </p>
+      <button class="remove-button">[x]</button>
+    </div>
+  </div>
+
+  <script>
+    document.querySelector('#container').addEventListener('click', (e) => {        
+        if (e.target.className != 'remove-button') return;
+           
+        e.target.closest('.pane').remove(); 
+    });
+  </script>
+
+  <h4>Make the table sortable: clicks on <th> elements should sort it by corresponding column.  </h4>
+
+    <style>
+        table {
+          border-collapse: collapse;
+        }
+        th, td {
+          border: 1px solid black;
+          padding: 4px;
+        }
+        th {
+          cursor: pointer;
+        }
+        th:hover {
+          background: yellow;
+        }
+      </style>
+
+<table id="grid">
+    <thead>
+      <tr>
+        <th data-type="number">Вік</th>
+        <th data-type="string">Ім’я</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>5</td>
+        <td>Іван</td>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td>Петро</td>
+      </tr>
+      <tr>
+        <td>12</td>
+        <td>Ганна</td>
+      </tr>
+      <tr>
+        <td>9</td>
+        <td>Євген</td>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>Ілля</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <script>
+document.querySelector('#grid').addEventListener('click', (e) => {
+     if(e.target.tagName != 'TH') return;
+    
+    const tbody = document.querySelector('tbody');
+    const rowsArr = Array.from(tbody.rows);
+
+    if (e.target.dataset.type == 'number') {
+        console.log(1);
+        rowsArr.sort((a,b) => a.cells[0].innerHTML - b.cells[0].innerHTML);
+        tbody.append(...rowsArr);
+
+    }
+
+    if (e.target.dataset.type == 'string') {
+        console.log(2);
+
+        rowsArr.sort((a,b) => a.cells[1].innerHTML > b.cells[1].innerHTML ? 1 : -1);
+        tbody.append(...rowsArr);
+     }
+});
+  </script>
+
+<h4>Поведінка підказки</h4>
+<p>Створіть JS-код для поведінки спливаючої підказки.
+ При наведенні миші на елемент з data-tooltip, підказка має з’явитися над ним і ховатися при переході на інший елемент.</p>
+
+ <style>
+    #tooltip-container {
+      height: 200px;
+      /* зробіть прокручування можливим для body, підказка повинна працювати після прокрутки */
+    }
+
+    .tooltip {
+      /* деякі стилі для підказки, замість них ви можете використовувати власні */
+      position: fixed;
+      padding: 10px 20px;
+      border: 1px solid #b3c9ce;
+      border-radius: 4px;
+      text-align: center;
+      font: italic 14px/1.3 sans-serif;
+      color: #333;
+      background: #fff;
+      box-shadow: 3px 3px 3px rgba(0, 0, 0, .3);
+    }
+  </style>
+  <div id="tooltip-container">
+    <p>ЛаЛаЛа ЛаЛаЛа ЛаЛаЛа ЛаЛаЛа ЛаЛаЛа ЛаЛаЛа ЛаЛаЛа ЛаЛаЛа ЛаЛаЛа</p>
+    <p>ЛаЛаЛа ЛаЛаЛа ЛаЛаЛа ЛаЛаЛа ЛаЛаЛа ЛаЛаЛа ЛаЛаЛа ЛаЛаЛа ЛаЛаЛа</p>
+  
+    <button data-tooltip="підказка довша за елемент">Мала кнопка</button>
+    <button data-tooltip="підказка">Ще одна кнопка</button>
+  
+    <p>Прокрутіть сторінку, щоб кнопки з’явилися вгорі. Перевірте, чи правильно відображаються підказки.</p>
+</div>
+    <script>
+        const tooltip = document.createElement('div');
+        tooltip.classList.add('tooltip');
+
+       document.addEventListener('mouseover', (e) => {
+          if (!e.target.dataset.tooltip) return;
+
+          tooltip.textContent = e.target.dataset.tooltip;
+           document.querySelector('#tooltip-container').append(tooltip);
+
+          const coords = e.target.getBoundingClientRect();
+          let left = 0;
+          if(tooltip.offsetWidth > e.target.offsetWidth) {
+            left = coords.left;
+         } else {
+            left = coords.left + (e.target.offsetWidth - tooltip.offsetWidth) / 2 ;
+         }
+
+          let top = coords.top - tooltip.offsetHeight - 5;
+          
+          if(coords.top < tooltip.offsetHeight) {
+            top = coords.bottom + 5;
+          }
+          
+          tooltip.style.left = left + 'px';
+          tooltip.style.top = top + 'px';
+        });
+
+       document.addEventListener('mouseout', (e) => {
+        if (!e.target.dataset.tooltip) return;
+            tooltip.remove();
+       });
+
+    </script>
+<h2>Default browser actions</h2>
+<script>
+    function handler() {
+      alert( "..." );
+      return false;
+    }
+  </script>
+  
+  <a href="https://w3.org" onclick="return handler()">браузер перейде на w3.org</a>
+
+  <h4>Зловіть посилання</h4>
+  <style>
+    #contents {
+      padding: 5px;
+      border: 1px green solid;
+    }
+  </style>
+
+  <fieldset id="contents">
+    <legend>#contents</legend>
+    <p>
+      Як щодо того, щоб почитати <a href="https://wikipedia.org">Вікіпедію</a> або відвідати <a href="https://w3.org"><i>W3.org</i></a> і дізнатися про сучасні стандарти?
+    </p>
+  </fieldset>
+  <script>
+    document.querySelector('#contents').addEventListener('click', (e) => {
+        if(!e.target.closest('a').hasAttribute('href')) return;
+        const userConfirmed = confirm('Do you want to leave this page?');
+        
+        if(!userConfirmed) {
+            e.preventDefault();
+        }
+    })
+    </script>
+
+<head>
+    <title>Галерея</title>
+    <link rel="stylesheet" href="gallery.css">
+    <meta charset="utf-8">
+  </head>
+  
+  <style>
+    .selected {
+      background: #0f0;
+    }
+
+    li {
+      cursor: pointer;
+    }
+  </style>
+<h2>Mouse events</h2>
+<h4>Створіть список, де елементи можна виділити, як у файлових менеджерах.
+  Клік на елементі списку виділяє лише цей елемент (додає клас .selected), знімає виділення з усіх інших.
+  Якщо клікнути за допомогою Ctrl (Cmd для Mac), тоді виділення елемента перемикається, але інші елементи не змінюються.</h4>
+  
+  Клікніть на елемент списку, щоб виділити його.
+  <br>
+
+  <ul id="ul">
+    <li>Крістофер Робін</li>
+    <li>Вінні Пух</li>
+    <li>Тигра</li>
+    <li>Кенга</li>
+    <li>Кролик. Просто кролик.</li>
+  </ul>
+
+  <script>
+   const list = document.querySelector('#ul');
+
+   list.onmousedown = () => false;
+   list.addEventListener('click', (e) => {
+  const target = e.target;
+   if (target.tagName != 'LI') return;
+   
+   list.querySelectorAll('li').forEach(item => {
+    item.classList.remove('selected');
+   })
+   target.classList.add('selected');
+   
+   if (event.ctrlKey || event.metaKey) {
+      li.classList.toggle('selected');
+     } 
+});
+
+  </script>
+
+<h4>Галерея зображень</h4>
+
+<p><img id="largeImg" src="https://en.js.cx/gallery/img1-lg.jpg" alt="Large image"></p>
+
+<ul id="thumbs">
+  <!-- браузер показує невелику вбудовану підказку при наведенні курсора з текстом атрибута "title" -->
+  <li>
+    <a href="https://en.js.cx/gallery/img2-lg.jpg" title="Зображення 2"><img src="https://en.js.cx/gallery/img2-thumb.jpg"></a>
+  </li>
+  <li>
+    <a href="https://en.js.cx/gallery/img3-lg.jpg" title="Зображення 3"><img src="https://en.js.cx/gallery/img3-thumb.jpg"></a>
+  </li>
+  <li>
+    <a href="https://en.js.cx/gallery/img4-lg.jpg" title="Зображення 4"><img src="https://en.js.cx/gallery/img4-thumb.jpg"></a>
+  </li>
+  <li>
+    <a href="https://en.js.cx/gallery/img5-lg.jpg" title="Зображення 5"><img src="https://en.js.cx/gallery/img5-thumb.jpg"></a>
+  </li>
+  <li>
+    <a href="https://en.js.cx/gallery/img6-lg.jpg" title="Зображення 6"><img src="https://en.js.cx/gallery/img6-thumb.jpg"></a>
+  </li>
+</ul>
+
+<script>
+    document.querySelector('#thumbs').addEventListener('click', (e) => {
+    if (!e.target.closest('img').hasAttribute('src')) return;
+    e.preventDefault();
+
+    const smallImagePath = e.target.src;
+    document.querySelector('#largeImg').src = smallImagePath;
+    });
+</script>
+
+</body>
+</html>
